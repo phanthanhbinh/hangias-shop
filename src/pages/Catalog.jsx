@@ -22,13 +22,10 @@ const SORTERS = {
   new: (a, b) => b.createdAt.localeCompare(a.createdAt),
 };
 
-// Поиск без учёта регистра и разницы «е/ё»
 const normalize = (text) => text.toLowerCase().replace(/ё/g, 'е');
 
-// Цена в адресе — только целое неотрицательное число, остальное отбрасываем
 const parsePrice = (value) => (/^\d{1,6}$/.test(value ?? '') ? String(Number(value)) : '');
 
-// Читаем фильтры из адреса страницы, отбрасывая неизвестные значения
 function readFilters(params) {
   const category = params.get('category') ?? '';
   const sort = params.get('sort') ?? 'popular';
@@ -61,7 +58,6 @@ function applyFilters(products, f) {
   const q = normalize(f.q.trim());
   let min = f.priceMin === '' ? -Infinity : Number(f.priceMin);
   let max = f.priceMax === '' ? Infinity : Number(f.priceMax);
-  // Если «от» больше «до» (например, пока пользователь ещё печатает) — считаем диапазон перевёрнутым
   if (min > max) [min, max] = [max, min];
 
   return products
@@ -74,7 +70,6 @@ function applyFilters(products, f) {
       if (q && !normalize(`${p.name} ${p.composition.join(' ')}`).includes(q)) return false;
       return true;
     })
-    // id как второй ключ — порядок одинаковых по цене товаров не «прыгает»
     .sort((a, b) => SORTERS[f.sort](a, b) || a.id - b.id);
 }
 
@@ -93,22 +88,17 @@ export default function Catalog() {
   const panelRef = useRef(null);
   const toggleRef = useRef(null);
 
-  // Клик по фильтру — отдельная запись в истории (работают «Назад/Вперёд»),
-  // ввод текста (поиск, цена) — замена текущей записи, чтобы не засорять историю
   const update = (patch, { replace = false } = {}) =>
     setParams(writeFilters({ ...filters, ...patch }), { replace });
 
-  usePageTitle(CATEGORIES.find((c) => c.id === filters.category)?.name ?? 'Каталог');
+  usePageTitle(CATEGORIES.find((c) => c.id === filters.category)?.name ?? 'Danh mục');
 
-  // Поиск из шапки или «Назад» меняет q в адресе — подхватываем его в поле ввода.
-  // Если текст совпадает с точностью до пробелов по краям, не трогаем поле, иначе съедим пробел при наборе.
   useEffect(() => {
     setSearchText((text) => (text.trim() === filters.q.trim() ? text : filters.q));
   }, [filters.q]);
 
   useEffect(() => {
     if (debouncedSearch.trim() !== filters.q.trim()) update({ q: debouncedSearch }, { replace: true });
-    // update пересоздаётся на каждом рендере, следим только за введённым текстом
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSearch]);
 
@@ -116,7 +106,6 @@ export default function Catalog() {
     setVisible(PAGE_SIZE);
   }, [params]);
 
-  // Мобильная панель: Esc, блокировка прокрутки, фокус внутрь и обратно на кнопку
   useEffect(() => {
     if (!panelOpen) return undefined;
     const desktop = window.matchMedia(DESKTOP_QUERY);
@@ -148,7 +137,6 @@ export default function Catalog() {
     setParams(filters.sort === 'popular' ? {} : { sort: filters.sort });
   };
 
-  // Когда пользователь закончил ввод цены: если «от» больше «до», меняем их местами
   const normalizePrice = () => {
     const { priceMin, priceMax } = filters;
     if (priceMin !== '' && priceMax !== '' && Number(priceMin) > Number(priceMax)) {
@@ -158,7 +146,7 @@ export default function Catalog() {
 
   return (
     <div className="container page">
-      <h1 className="page-title">{categoryName ?? 'Каталог'}</h1>
+      <h1 className="page-title">{categoryName ?? 'Danh mục'}</h1>
 
       <div className={styles.layout}>
         <aside
@@ -166,15 +154,15 @@ export default function Catalog() {
           ref={panelRef}
           tabIndex={-1}
           className={`${styles.panel} ${panelOpen ? styles.panelOpen : ''}`}
-          aria-label="Фильтры"
+          aria-label="Bộ lọc"
         >
           <div className={styles.panelHead}>
-            <h2 className={styles.panelTitle}>Фильтры</h2>
+            <h2 className={styles.panelTitle}>Bộ lọc</h2>
             <button
               type="button"
               className={styles.panelClose}
               onClick={() => setPanelOpen(false)}
-              aria-label="Закрыть фильтры"
+              aria-label="Đóng bộ lọc"
             >
               <CloseIcon />
             </button>
@@ -183,11 +171,11 @@ export default function Catalog() {
           <div className={styles.panelFooter}>
             {hasAnyFilter && (
               <button type="button" className="btn btn-outline" onClick={reset}>
-                Сбросить фильтры
+                Xóa bộ lọc
               </button>
             )}
             <button type="button" className={`btn btn-primary ${styles.panelApply}`} onClick={() => setPanelOpen(false)}>
-              Показать {found.length}
+              Hiển thị {found.length}
             </button>
           </div>
         </aside>
@@ -207,32 +195,32 @@ export default function Catalog() {
               aria-controls="filters-panel"
             >
               <FilterIcon width={18} height={18} />
-              Фильтры{activeCount > 0 && ` (${activeCount})`}
+              Bộ lọc{activeCount > 0 && ` (${activeCount})`}
             </button>
             <SortSelect value={filters.sort} onChange={(sort) => update({ sort })} />
           </div>
 
           <div className={styles.summary}>
             <p className={styles.count} aria-live="polite">
-              {loading ? 'Загружаем товары…' : error ? '' : `Найдено: ${found.length} ${plural(found.length)}`}
+              {loading ? 'Đang tải sản phẩm…' : error ? '' : `Tìm thấy: ${found.length} ${plural(found.length)}`}
             </p>
             {hasAnyFilter && !loading && (
               <button type="button" className="btn btn-ghost" onClick={reset}>
-                Сбросить фильтры
+                Xóa bộ lọc
               </button>
             )}
           </div>
 
           {error ? (
-            <EmptyState icon="!" title="Не удалось загрузить каталог" text="Проверьте подключение к интернету и попробуйте ещё раз.">
+            <EmptyState icon="!" title="Không thể tải danh mục" text="Hãy kiểm tra kết nối internet của bạn rồi thử lại.">
               <button type="button" className="btn btn-primary" onClick={retry}>
                 Повторить
               </button>
             </EmptyState>
           ) : !loading && found.length === 0 ? (
-            <EmptyState title="Ничего не найдено" text="Попробуйте изменить запрос или убрать часть фильтров.">
+            <EmptyState title="Không tìm thấy sản phẩm" text="Hãy thử thay đổi yêu cầu hoặc bỏ một số bộ lọc.">
               <button type="button" className="btn btn-primary" onClick={reset}>
-                Сбросить фильтры
+                Đặt lại bộ lọc
               </button>
             </EmptyState>
           ) : (
@@ -241,7 +229,7 @@ export default function Catalog() {
               {!loading && visible < found.length && (
                 <div className={styles.more}>
                   <button type="button" className="btn btn-outline" onClick={() => setVisible((v) => v + PAGE_SIZE)}>
-                    Показать ещё
+                    Hiển thị thêm
                   </button>
                 </div>
               )}
@@ -256,7 +244,7 @@ export default function Catalog() {
 function plural(n) {
   const mod10 = n % 10;
   const mod100 = n % 100;
-  if (mod10 === 1 && mod100 !== 11) return 'товар';
-  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return 'товара';
-  return 'товаров';
+  if (mod10 === 1 && mod100 !== 11) return 'Sản phẩm';
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return 'Sản phẩm';
+  return 'Sản phẩm';
 }

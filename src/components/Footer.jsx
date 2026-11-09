@@ -5,7 +5,6 @@ import styles from './Footer.module.css';
 const SOCIALS = [
   { href: 'https://instagram.com', label: 'Instagram' },
   { href: 'https://t.me', label: 'Telegram' },
-  { href: 'https://vk.com', label: 'ВКонтакте' },
 ];
 
 export default function Footer() {
@@ -13,14 +12,14 @@ export default function Footer() {
     <footer className={styles.footer}>
       <div className={`container ${styles.grid}`}>
         <div>
-          <p className={styles.logo}>Флёр</p>
+          <p className={styles.logo}>Hangias Florist</p>
           <p className={styles.muted}>
-            Небольшая мастерская на Сурганова. Собираем букеты в день заказа и присылаем фото перед отправкой.
+            Cửa hàng hoa nhỏ ở thành phố Vinh. Chúng tôi kết hoa ngay trong ngày bạn đặt hàng và gửi ảnh cho bạn xem trước khi giao.
           </p>
         </div>
 
-        <nav aria-label="Каталог">
-          <h2 className={styles.title}>Каталог</h2>
+        <nav aria-label="Danh mục">
+          <h2 className={styles.title}>Danh mục</h2>
           <ul className={styles.list}>
             {CATEGORIES.map((c) => (
               <li key={c.id}>
@@ -31,20 +30,20 @@ export default function Footer() {
         </nav>
 
         <div>
-          <h2 className={styles.title}>Контакты</h2>
+          <h2 className={styles.title}>Liên hệ</h2>
           <address className={styles.list}>
-            <span>г. Минск, ул. Сурганова, 43, пом. 12</span>
-            <a href="tel:+375293184672">+375 (29) 318-46-72</a>
+            <span>Quang Trung, Vinh, Nghệ An</span>
+            <a href="tel:+0963162003">0963162003</a>
             <a href="mailto:hello@fleur.by">hello@fleur.by</a>
           </address>
         </div>
 
         <div>
-          <h2 className={styles.title}>Часы работы</h2>
+          <h2 className={styles.title}>Giờ mở cửa</h2>
           <p className={styles.muted}>
-            Ежедневно 8:00–22:00
+            Hằng ngày 8:00–22:00
             <br />
-            Доставка 9:00–22:00
+            Vận chuyển 9:00–22:00
           </p>
           <ul className={styles.socials}>
             {SOCIALS.map((s) => (
@@ -58,7 +57,7 @@ export default function Footer() {
         </div>
       </div>
       <div className={`container ${styles.bottom}`}>
-        © {new Date().getFullYear()} Флёр. Демо-проект для портфолио. Бизнес вымышленный, заказы не обрабатываются.
+        © {new Date().getFullYear()} Hangias Florist. All rights reserved.
       </div>
     </footer>
   );

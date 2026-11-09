@@ -19,7 +19,7 @@ export default function Toast({ toasts, onDismiss }) {
               {t.actionLabel}
             </button>
           )}
-          <button type="button" className={styles.close} onClick={() => onDismiss(t.id)} aria-label="Закрыть уведомление">
+          <button type="button" className={styles.close} onClick={() => onDismiss(t.id)} aria-label="Đóng thông báo">
             <CloseIcon width={18} height={18} />
           </button>
         </div>

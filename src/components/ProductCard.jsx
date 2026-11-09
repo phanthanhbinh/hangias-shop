@@ -17,7 +17,7 @@ export default function ProductCard({ product }) {
 
   const addToCart = () => {
     add(product.id);
-    toast.show(`«${product.name}» добавлен в корзину`);
+    toast.show(`«${product.name}» đã thêm vào giỏ hàng`);
   };
 
   return (
@@ -41,7 +41,7 @@ export default function ProductCard({ product }) {
         type="button"
         className={`${styles.fav} ${isFav ? styles.favActive : ''}`}
         aria-pressed={isFav}
-        aria-label={isFav ? `Убрать «${product.name}» из избранного` : `Добавить «${product.name}» в избранное`}
+        aria-label={isFav ? `Loại «${product.name}» khỏi danh sách yêu thích` : `Thêm «${product.name}» vào danh sách yêu thích`}
         onClick={() => favorites.toggle(product.id)}
       >
         <HeartIcon filled={isFav} />
@@ -52,7 +52,7 @@ export default function ProductCard({ product }) {
           <Link to={`/product/${product.slug}`}>{product.name}</Link>
         </h3>
         <p className={styles.meta}>
-          Размер {product.size} · ★ {product.rating.toFixed(1).replace('.', ',')} ({product.reviews})
+          Kích cỡ {product.size} · ★ {product.rating.toFixed(1).replace('.', ',')} ({product.reviews})
         </p>
         <div className={styles.footer}>
           <p className={styles.price}>
@@ -66,10 +66,10 @@ export default function ProductCard({ product }) {
           </p>
           {product.inStock ? (
             <button type="button" className={`btn btn-primary ${styles.add}`} onClick={addToCart}>
-              В корзину
+              Thêm vào giỏ hàng
             </button>
           ) : (
-            <span className={styles.outOfStock}>Нет в наличии</span>
+            <span className={styles.outOfStock}>Hết hàng</span>
           )}
         </div>
       </div>

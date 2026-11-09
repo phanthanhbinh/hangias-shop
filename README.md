@@ -1,81 +1,80 @@
-# Флёр — каталог цветочного магазина
+# Fleur — Flower Shop Catalog
 
-Интернет-каталог цветочного магазина «Флёр» (Минск) с корзиной, избранным и оформлением заказа.
-Учебный проект для портфолио: React 18, роутинг, глобальное состояние, фильтры в URL, адаптивная вёрстка без UI-библиотек.
+An online catalog for the "Fleur" flower shop (Minsk), featuring a shopping cart, a "favorites" list, and an order checkout process.
+A portfolio project built with React 18, utilizing routing, global state management, URL-based filtering, and custom responsive design (no UI libraries used).
 
-**Демо:** https://nkorshun.dev/fleur/
+**Demo:** https://nkorshun.dev/fleur/
 
-## Возможности
+## Features
 
-- **Главная:** баннер с акцией, плитки категорий, «Хиты продаж», преимущества, отзывы, призыв перейти в каталог.
-- **Каталог:**
-  - фильтры по категории, цене (от/до), размеру, наличию и скидке;
-  - поиск по названию и составу с задержкой 300 мс (debounce);
-  - сортировка: популярные, сначала дешевле, сначала дороже, новинки;
-  - все фильтры, поиск и сортировка хранятся в адресе страницы, так что ссылкой можно поделиться;
-  - счётчик найденных товаров, сброс фильтров, пустое состояние, скелетоны при загрузке, экран ошибки с кнопкой «Повторить»;
-  - кнопка «Показать ещё» (по 12 товаров);
-  - на мобильных фильтры открываются в выезжающей панели.
-- **Страница товара:** галерея с миниатюрами, старая и новая цена, состав, размер, выбор количества, кнопки «В корзину» и «В избранное», блок «Вам может понравиться». Несуществующий адрес товара открывает страницу 404.
-- **Корзина:**
-  - изменение количества;
-  - удаление с кнопкой «Отменить» в уведомлении;
-  - бесплатная доставка от 150 BYN с полосой прогресса;
-  - промокод `FLEUR10` даёт −10%.
-- **Оформление заказа:** телефон с маской +375, дата и интервал доставки, текст открытки (до 200 символов, со счётчиком), анонимная доставка, способ оплаты, проверка полей. После отправки показывается окно «Заказ №… оформлен», а корзина очищается.
-- **Избранное** и **404**.
-- Корзина и избранное сохраняются в `localStorage`. Если там пусто или лежат повреждённые данные, приложение всё равно работает.
-- Доступность: семантическая разметка, подписи у полей, `aria`-атрибуты, видимый фокус, управление с клавиатуры (Esc закрывает меню, панели и модальное окно, фокус не уходит из модального окна), ссылка «Перейти к содержимому».
+- **Home Page:** Promotional banner, category tiles, "Best Sellers" section, key benefits, customer reviews, and a call-to-action to visit the catalog.
+- **Catalog:**
+- Filters by category, price (min/max), size, availability, and discount status. 
+- Search by product name or composition (with a 300ms debounce delay). 
+- Sorting options: popularity, price (low to high), price (high to low), and new arrivals. 
+- All filters, search queries, and sorting settings are stored in the URL, making it easy to share specific views. 
+- Includes a product count indicator, a "clear filters" option, empty state handling, skeleton loaders, and an error screen with a "Retry" button. 
+- "Show More" button (loads 12 additional items at a time). 
+- On mobile devices, filters are accessible via a slide-out panel.
+- **Product Page:** Image gallery with thumbnails, original and discounted prices, product composition, size, quantity selector, "Add to Cart" and "Add to Favorites" buttons, and a "You Might Also Like" section. Accessing a non-existent product URL triggers a 404 error page.
+- **Shopping Cart:**
+- Adjustable item quantities. 
+- Option to remove items, with an "Undo" button provided in the notification. 
+- Free delivery threshold (150 BYN) with a visual progress bar. 
+- Promo code `FLEUR10` provides a 10% discount. - **Order Placement:** Phone number input with a `+375` mask, delivery date and time slot selection, gift message (up to 200 characters, with a character counter), anonymous delivery option, payment method selection, and form field validation. Upon submission, an "Order #[number] placed" confirmation appears, and the cart is cleared.
+- **Favorites** and **404 (Not Found)** pages.
+- The cart and favorites are persisted in `localStorage`. The application remains functional even if `localStorage` is empty or contains corrupted data.
+- **Accessibility:** Semantic markup, field labels, `ARIA` attributes, visible focus indicators, full keyboard navigation (e.g., the `Esc` key closes menus, panels, and modals; focus is trapped within modal windows), and a "Skip to content" link.
 
-## Стек
+## Tech Stack
 
 - React 18 + Vite
-- React Router v6 (`useSearchParams` для фильтров)
-- CSS Modules + глобальные CSS-переменные, без UI-библиотек
+- React Router v6 (using `useSearchParams` for filters)
+- CSS Modules + global CSS variables (no UI component libraries)
 - ESLint 9 (flat config)
-- Деплой: Netlify
+- Deployment: Netlify
 
-## Архитектура
+## Architecture
 
 ```
 src/
-  main.jsx, App.jsx        точка входа, маршруты, прокрутка наверх при смене страницы
-  pages/                   Home, Catalog, Product, Cart, Checkout, Favorites, NotFound
-  components/              Header, Footer, ProductCard, ProductGrid, Filters, SearchBar, SortSelect,
-                           QuantityControl, CartItem, OrderSummary, EmptyState, Skeleton, Toast, Modal, Icons
-  context/                 CartContext, FavoritesContext, ToastContext
-  hooks/                   useLocalStorage, useDebounce, useProducts, usePageTitle
-  utils/                   formatPrice (BYN), validators (телефон, форма заказа)
-  data/                    products.js (30 товаров), api.js (имитация запроса)
-  styles/                  variables.css, global.css
+main.jsx, App.jsx        Entry point, routing, automatic scroll-to-top on page navigation
+pages/                   Home, Catalog, Product, Cart, Checkout, Favorites, NotFound
+components/              Header, Footer, ProductCard, ProductGrid, Filters, SearchBar, SortSelect,
+QuantityControl, CartItem, OrderSummary, EmptyState, Skeleton, Toast, Modal, Icons
+context/                 CartContext, FavoritesContext, ToastContext
+hooks/                   useLocalStorage, useDebounce, useProducts, usePageTitle
+utils/                   formatPrice (BYN), validators (phone number, order form)
+data/                    products.js (30 items), api.js (simulated API requests)
+styles/                  variables.css, global.css
 ```
 
-- **CartContext** (`useReducer`) хранит только `{ id, qty }` и промокод. Сумма, скидка, доставка и итог считаются из этих данных в `useMemo`. При загрузке данные из `localStorage` проверяются: неизвестные товары и неверные количества отбрасываются.
-- **FavoritesContext** (`useReducer`) хранит список id избранных товаров.
-- **ToastContext** показывает всплывающие уведомления. Можно добавить кнопку действия, например «Отменить».
-- **useProducts** загружает товары через `fetchProducts()`: Promise с задержкой 300–600 мс. Хук возвращает `loading`, `error` и `retry`.
-- **useDebounce** откладывает поиск. **useLocalStorage** сохраняет состояние в хранилище и не падает, если хранилище недоступно.
+- **CartContext** (implemented via `useReducer`) stores only `{ id, qty }` pairs and the promo code. The subtotal, discount, shipping, and grand total are calculated from this data using `useMemo`. Upon loading, the data from `localStorage` is validated: unrecognized products and invalid quantities are discarded.
+- **FavoritesContext** (using `useReducer`) stores a list of IDs for favorited products.
+- **ToastContext** handles the display of pop-up notifications. It supports optional action buttons, such as "Undo."
+- **useProducts** fetches products via `fetchProducts()`—a Promise that includes a 300–600ms delay. The hook returns `loading`, `error`, and a `retry` function.
+- **useDebounce** delays search operations. **useLocalStorage** persists state to storage and is designed to handle cases where storage is inaccessible without crashing.
 
-Чтобы посмотреть состояние ошибки, добавьте к адресу каталога `?error=1`.
+To simulate an error state, append `?error=1` to the catalog URL.
 
-## Запуск
+## Getting Started
 
 ```bash
 npm install
 npm run dev      # http://localhost:5173
-npm run lint     # проверка ESLint
-npm run build    # сборка в dist/
-npm run preview  # просмотр собранной версии
+npm run lint     # run ESLint checks
+npm run build    # build for production (dist/)
+npm run preview  # preview the production build
 ```
 
-## Деплой на Netlify
+## Deploying to Netlify
 
-Настройки в `netlify.toml`: команда сборки `npm run build`, папка с результатом `dist`.
+Configuration is defined in `netlify.toml`: the build command is `npm run build`, and the output directory is `dist`.
 
-Правило `/* → /index.html 200` отдаёт приложение на любом адресе. Без него прямой переход по ссылке вроде `/catalog?category=roses` или `/product/...` давал бы 404.
+The rule `/* → /index.html 200` ensures the application loads correctly regardless of the URL path. Without this, navigating directly to a URL like `/catalog?category=roses` or `/product/...` would result in a 404 error.
 
-Через командную строку: `netlify deploy --build --prod`.
+Via the command line: `netlify deploy --build --prod`.
 
-## Фото
+## Images
 
-Фотографии взяты с [Unsplash](https://unsplash.com) по прямым ссылкам.
+The images are sourced from [Unsplash](https://unsplash.com) via direct links.

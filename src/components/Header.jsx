@@ -7,10 +7,10 @@ import { BagIcon, CloseIcon, HeartIcon, MenuIcon } from './Icons';
 import styles from './Header.module.css';
 
 const NAV = [
-  { to: '/', label: 'Главная', end: true },
-  { to: '/catalog', label: 'Каталог' },
-  { to: '/catalog?category=bouquets', label: 'Букеты' },
-  { to: '/catalog?category=plants', label: 'Растения' },
+  { to: '/', label: 'Trang chủ', end: true },
+  { to: '/catalog', label: 'Danh mục' },
+  { to: '/catalog?category=bouquets', label: 'Bó hoa' },
+  { to: '/catalog?category=plants', label: 'Thực vật trong nhà' },
 ];
 
 export default function Header() {
@@ -52,8 +52,8 @@ export default function Header() {
           {menuOpen ? <CloseIcon /> : <MenuIcon />}
         </button>
 
-        <Link to="/" className={styles.logo} aria-label="Флёр — на главную">
-          Флёр
+        <Link to="/" className={styles.logo} aria-label="Hangias Florist — Trang chủ">
+          Hangias Florist
         </Link>
 
         <nav id="main-nav" className={`${styles.nav} ${menuOpen ? styles.navOpen : ''}`} aria-label="Основное меню">
@@ -73,16 +73,16 @@ export default function Header() {
             ))}
           </ul>
           <div className={styles.mobileSearch}>
-            <SearchBar value={query} onChange={setQuery} onSubmit={search} placeholder="Найти букет" />
+            <SearchBar value={query} onChange={setQuery} onSubmit={search} placeholder=" Tìm kiếm" />
           </div>
         </nav>
 
         <div className={styles.search}>
-          <SearchBar value={query} onChange={setQuery} onSubmit={search} placeholder="Найти букет" />
+          <SearchBar value={query} onChange={setQuery} onSubmit={search} placeholder=" Tìm kiếm" />
         </div>
 
         <div className={styles.actions}>
-          <Link to="/favorites" className={styles.iconLink} aria-label={`Избранное, товаров: ${favCount}`}>
+          <Link to="/favorites" className={styles.iconLink} aria-label={`Yêu thích, Sản phẩm: ${favCount}`}>
             <HeartIcon />
             {favCount > 0 && (
               <span key={favCount} className={styles.badge}>
@@ -90,7 +90,7 @@ export default function Header() {
               </span>
             )}
           </Link>
-          <Link to="/cart" className={styles.iconLink} aria-label={`Корзина, товаров: ${cartCount}`}>
+          <Link to="/cart" className={styles.iconLink} aria-label={`Giỏ hàng, số lượng: ${cartCount}`}>
             <BagIcon />
             {cartCount > 0 && (
               <span key={cartCount} className={styles.badge}>

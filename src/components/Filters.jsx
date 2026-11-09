@@ -28,8 +28,8 @@ export default function Filters({ filters, onChange, onPriceBlur }) {
   return (
     <div className={styles.filters}>
       <fieldset className={styles.group}>
-        <legend className={styles.legend}>Категория</legend>
-        {[{ id: '', name: 'Все товары' }, ...CATEGORIES].map((c) => (
+        <legend className={styles.legend}>Loại</legend>
+        {[{ id: '', name: 'Tất cả sản phẩm' }, ...CATEGORIES].map((c) => (
           <label key={c.id || 'all'} className={styles.option}>
             <input
               type="radio"
@@ -43,21 +43,21 @@ export default function Filters({ filters, onChange, onPriceBlur }) {
       </fieldset>
 
       <fieldset className={styles.group}>
-        <legend className={styles.legend}>Цена, BYN</legend>
+        <legend className={styles.legend}>Giá</legend>
         <div className={styles.price}>
           <label className={styles.priceField}>
-            <span aria-hidden="true">от</span>
-            <input {...priceProps('priceMin', PRICE_MIN, 'Цена от')} />
+            <span aria-hidden="true">từ</span>
+            <input {...priceProps('priceMin', PRICE_MIN, 'Giá từ')} />
           </label>
           <label className={styles.priceField}>
-            <span aria-hidden="true">до</span>
-            <input {...priceProps('priceMax', PRICE_MAX, 'Цена до')} />
+            <span aria-hidden="true">đến</span>
+            <input {...priceProps('priceMax', PRICE_MAX, 'Giá đến')} />
           </label>
         </div>
       </fieldset>
 
       <fieldset className={styles.group}>
-        <legend className={styles.legend}>Размер</legend>
+        <legend className={styles.legend}>Kích thước</legend>
         <div className={styles.sizes}>
           {SIZES.map((size) => (
             <label key={size} className={styles.size}>
@@ -69,14 +69,14 @@ export default function Filters({ filters, onChange, onPriceBlur }) {
       </fieldset>
 
       <fieldset className={styles.group}>
-        <legend className="visually-hidden">Дополнительно</legend>
+        <legend className="visually-hidden">Ngoài ra</legend>
         <label className={styles.option}>
           <input type="checkbox" checked={filters.inStock} onChange={(e) => onChange({ inStock: e.target.checked })} />
-          Только в наличии
+          Chỉ còn hàng
         </label>
         <label className={styles.option}>
           <input type="checkbox" checked={filters.sale} onChange={(e) => onChange({ sale: e.target.checked })} />
-          Только со скидкой
+          Chỉ có khuyến mãi
         </label>
       </fieldset>
     </div>

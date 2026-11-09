@@ -1,4 +1,4 @@
-export const PHONE_PREFIX = '+375';
+export const PHONE_PREFIX = '+84';
 
 export const TIME_SLOTS = ['09:00–11:00', '11:00–13:00', '13:00–15:00', '15:00–17:00', '17:00–19:00', '19:00–21:00', '20:00–22:00'];
 
@@ -6,16 +6,16 @@ export const TIME_SLOTS = ['09:00–11:00', '11:00–13:00', '13:00–15:00', '1
 // Скобки и дефисы ставим только перед следующей цифрой — иначе Backspace «упирается» в них.
 export function formatPhone(input) {
   let digits = input.replace(/\D/g, '');
-  if (digits.startsWith('375')) digits = digits.slice(3);
-  else if ('375'.startsWith(digits)) digits = ''; // стёрли часть префикса +375
-  else if (digits.length === 11 && digits.startsWith('80')) digits = digits.slice(2); // вставили 80 29 123-45-67
+  if (digits.startsWith('84')) digits = digits.slice(2);
+  else if ('84'.startsWith(digits)) digits = ''; // стёрли часть префикса +84
+  else if (digits.length === 10 && digits.startsWith('0')) digits = digits.slice(1); // вставили 0 29 123-45-67
   digits = digits.slice(0, 9);
 
   let result = PHONE_PREFIX;
-  if (digits.length > 0) result += ` (${digits.slice(0, 2)}`;
-  if (digits.length > 2) result += `) ${digits.slice(2, 5)}`;
-  if (digits.length > 5) result += `-${digits.slice(5, 7)}`;
-  if (digits.length > 7) result += `-${digits.slice(7, 9)}`;
+  if (digits.length > 0) result += ` ${digits.slice(0, 2)}`;
+  if (digits.length > 2) result += ` ${digits.slice(2, 5)}`;
+  if (digits.length > 5) result += `${digits.slice(5, 7)}`;
+  if (digits.length > 7) result += `${digits.slice(7, 9)}`;
   return result;
 }
 
@@ -44,19 +44,19 @@ const LETTERS = /\p{L}/gu;
 
 export function validateCheckout(values, now = new Date()) {
   const errors = {};
-  if ((values.name.match(LETTERS) ?? []).length < 2) errors.name = 'Укажите имя (минимум 2 буквы)';
-  if (!/^\+375 \((25|29|33|44)\) \d{3}-\d{2}-\d{2}$/.test(values.phone)) {
-    errors.phone = 'Введите номер полностью, код оператора 25, 29, 33 или 44';
-  }
-  if (values.address.trim().length < 5) errors.address = 'Укажите улицу, дом и квартиру';
-  if (!values.date) errors.date = 'Выберите дату доставки';
-  else if (!/^\d{4}-\d{2}-\d{2}$/.test(values.date)) errors.date = 'Введите дату полностью';
-  else if (values.date < minDeliveryDate(now)) errors.date = 'Дата не может быть в прошлом';
-  if (!values.time) errors.time = 'Выберите интервал доставки';
+  if ((values.name.match(LETTERS) ?? []).length < 2) errors.name = 'Nhập tên của bạn (tối thiểu 2 chữ cái)';
+  // if (!/^\+375 \((25|29|33|44)\) \d{3}-\d{2}-\d{2}$/.test(values.phone)) {
+  //   errors.phone = 'Введите номер полностью, код оператора 25, 29, 33 или 44';
+  // }
+  if (values.address.trim().length < 5) errors.address = 'Địa chỉ giao hàng (tối thiểu 5 ký tự)';
+  if (!values.date) errors.date = 'Chọn ngày giao hàng';
+  else if (!/^\d{4}-\d{2}-\d{2}$/.test(values.date)) errors.date = 'Nhập ngày đầy đủ';
+  else if (values.date < minDeliveryDate(now)) errors.date = 'Ngày không thể là trong quá khứ';
+  if (!values.time) errors.time = 'Chọn khoảng thời gian giao hàng';
   else if (values.date && !availableSlots(values.date, now).includes(values.time)) {
-    errors.time = 'Этот интервал уже прошёл, выберите другой';
+    errors.time = 'Khoảng thời gian này đã trôi qua, vui lòng chọn khoảng thời gian khác';
   }
-  if (values.card.length > 200) errors.card = 'Не больше 200 символов';
-  if (!values.payment) errors.payment = 'Выберите способ оплаты';
+  if (values.card.length > 200) errors.card = 'Không được quá 200 ký tự';
+  if (!values.payment) errors.payment = 'Chọn phương thức thanh toán';
   return errors;
 }

@@ -14,7 +14,7 @@ import NotFound from './NotFound';
 import { imageSrcSet } from '../utils/imageSrcSet';
 import styles from './Product.module.css';
 
-const SIZE_LABELS = { S: 'S — небольшой', M: 'M — средний', L: 'L — большой' };
+const SIZE_LABELS = { S: 'S — nhỏ', M: 'M — trung bình', L: 'L — lớn' };
 
 export default function Product() {
   const { slug } = useParams();
@@ -40,13 +40,13 @@ export default function Product() {
     setQty(1);
   }
 
-  usePageTitle(product?.name ?? (loading ? 'Загрузка' : error ? 'Ошибка загрузки' : 'Страница не найдена'));
+  usePageTitle(product?.name ?? (loading ? 'Đang tải' : error ? 'Lỗi tải' : 'Trang không tìm thấy'));
 
   if (loading) {
     return (
       <div className={`container page ${styles.loading}`} aria-busy="true">
         <div className={styles.skeletonImage} />
-        <p>Загружаем букет…</p>
+        <p>Đang tải bó hoa…</p>
       </div>
     );
   }
@@ -54,9 +54,9 @@ export default function Product() {
   if (error) {
     return (
       <div className="container page">
-        <p>Не удалось загрузить товар.</p>
+        <p>Không thể tải sản phẩm.</p>
         <button type="button" className="btn btn-primary" onClick={retry}>
-          Повторить
+          Thử lại
         </button>
       </div>
     );
@@ -75,7 +75,7 @@ export default function Product() {
   return (
     <div className="container page">
       <nav aria-label="Хлебные крошки" className={styles.crumbs}>
-        <Link to="/">Главная</Link> / <Link to={`/catalog?category=${category.id}`}>{category.name}</Link> /{' '}
+        <Link to="/">Trang chủ</Link> / <Link to={`/catalog?category=${category.id}`}>{category.name}</Link> /{' '}
         <span aria-current="page">{product.name}</span>
       </nav>
 
@@ -84,14 +84,14 @@ export default function Product() {
           <div className={styles.mainImage}>
             <img key={activeImage} src={product.images[activeImage]} alt={`${product.name}, фото ${activeImage + 1}`} />
           </div>
-          <ul className={styles.thumbs} aria-label="Фотографии товара">
+          <ul className={styles.thumbs} aria-label="Ảnh sản phẩm">
             {product.images.map((src, i) => (
               <li key={src}>
                 <button
                   type="button"
                   className={`${styles.thumb} ${i === activeImage ? styles.thumbActive : ''}`}
                   onClick={() => setActiveImage(i)}
-                  aria-label={`Показать фото ${i + 1}`}
+                  aria-label={`Hiển thị ảnh ${i + 1}`}
                   aria-pressed={i === activeImage}
                 >
                   <img src={src} srcSet={imageSrcSet(src)} sizes="100px" alt="" loading="lazy" />
@@ -105,14 +105,14 @@ export default function Product() {
           {product.tags.length > 0 && <p className={styles.tags}>{product.tags.join(' · ')}</p>}
           <h1 className={styles.title}>{product.name}</h1>
           <p className={styles.rating}>
-            ★ {product.rating.toFixed(1).replace('.', ',')} · оценок: {product.reviews} · {category.name}
+            ★ {product.rating.toFixed(1).replace('.', ',')} · đánh giá: {product.reviews} · {category.name}
           </p>
 
           <p className={styles.price}>
             {formatPrice(product.price)}
             {product.oldPrice && (
               <s className={styles.oldPrice}>
-                <span className="visually-hidden">Старая цена: </span>
+                <span className="visually-hidden">Giá cũ: </span>
                 {formatPrice(product.oldPrice)}
               </s>
             )}
@@ -126,7 +126,7 @@ export default function Product() {
               <dd>{product.composition.join(', ')}</dd>
             </div>
             <div>
-              <dt>Размер</dt>
+              <dt>Kích cỡ</dt>
               <dd>
                 {SIZE_LABELS[product.size]}, {product.dimensions}
               </dd>
@@ -134,7 +134,7 @@ export default function Product() {
             <div>
               <dt>Наличие</dt>
               <dd className={product.inStock ? styles.inStock : styles.outStock}>
-                {product.inStock ? 'В наличии, доставим сегодня' : 'Нет в наличии'}
+                {product.inStock ? 'Còn hàng, giao hàng hôm nay' : 'Hết hàng'}
               </dd>
             </div>
           </dl>
@@ -142,7 +142,7 @@ export default function Product() {
           <div className={styles.buy}>
             {product.inStock && <QuantityControl key={product.id} value={qty} onChange={setQty} />}
             <button type="button" className={`btn btn-primary ${styles.addBtn}`} onClick={addToCart} disabled={!product.inStock}>
-              {product.inStock ? 'В корзину' : 'Нет в наличии'}
+              {product.inStock ? 'Thêm vào giỏ hàng' : 'Hết hàng'}
             </button>
             <button
               type="button"
@@ -151,7 +151,7 @@ export default function Product() {
               aria-pressed={isFav}
             >
               <HeartIcon filled={isFav} width={18} height={18} />
-              {isFav ? 'В избранном' : 'В избранное'}
+              {isFav ? 'Trong yêu thích' : 'Thêm vào yêu thích'}
             </button>
           </div>
         </div>
@@ -159,7 +159,7 @@ export default function Product() {
 
       {related.length > 0 && (
         <section className={styles.related} aria-labelledby="related-title">
-          <h2 id="related-title">Вам может понравиться</h2>
+          <h2 id="related-title">Bạn có thể thích</h2>
           <ProductGrid products={related} />
         </section>
       )}

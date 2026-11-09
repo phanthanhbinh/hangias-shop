@@ -6,12 +6,12 @@ export default function NotFound() {
   usePageTitle('Страница не найдена');
   return (
     <div className="container page">
-      <EmptyState icon="❀" title="Страница не найдена" titleAs="h1" text="Кажется, этот букет уже разобрали. Но у нас есть много других!">
+      <EmptyState icon="❀" title="Страница не найдена" titleAs="h1" text="Có vẻ như bó hoa này đã có người chọn rồi. Nhưng chúng tôi vẫn còn rất nhiều bó khác!">
         <Link to="/" className="btn btn-primary">
-          На главную
+          Về trang chủ
         </Link>
         <Link to="/catalog" className="btn btn-outline">
-          В каталог
+          Đến danh mục
         </Link>
       </EmptyState>
     </div>

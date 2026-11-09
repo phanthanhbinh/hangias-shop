@@ -3,7 +3,7 @@ import { SearchIcon } from './Icons';
 import styles from './SearchBar.module.css';
 
 // Управляемое поле поиска. onSubmit — необязательный, для шапки (переход в каталог).
-export default function SearchBar({ value, onChange, onSubmit, placeholder = 'Поиск по названию и составу' }) {
+export default function SearchBar({ value, onChange, onSubmit, placeholder = ' Tìm kiếm theo tên và thành phần' }) {
   const id = useId();
 
   const handleSubmit = (e) => {

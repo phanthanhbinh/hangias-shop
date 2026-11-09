@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
-const SITE = 'Флёр';
-export const DEFAULT_TITLE = 'Флёр — доставка цветов по Минску за 2 часа';
+const SITE = 'Hangias Florist';
+export const DEFAULT_TITLE = 'Hangias Florist — giao hoa tại thành phố Vinh trong vòng 2 giờ';
 
 // Заголовок вкладки для текущей страницы
 export function usePageTitle(title) {

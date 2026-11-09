@@ -22,7 +22,7 @@ export default function App() {
   return (
     <>
       <a className="skip-link" href="#main">
-        Перейти к содержимому
+        Chuyển đến trang chủ
       </a>
       <ScrollToTop />
       <Header />

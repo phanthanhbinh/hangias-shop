@@ -10,21 +10,21 @@ export default function OrderSummary({ children }) {
     <div className={styles.summary}>
       <dl className={styles.rows}>
         <div>
-          <dt>Товары</dt>
+          <dt>Sản phẩm</dt>
           <dd>{formatPrice(subtotal)}</dd>
         </div>
         {discount > 0 && (
           <div className={styles.discount}>
-            <dt>Скидка по {promo}</dt>
+            <dt>Giảm giá theo {promo}</dt>
             <dd>−{formatPrice(discount)}</dd>
           </div>
         )}
         <div>
-          <dt>Доставка</dt>
-          <dd>{delivery === 0 ? 'Бесплатно' : formatPrice(delivery)}</dd>
+          <dt>Vận chuyển</dt>
+          <dd>{delivery === 0 ? 'Miễn phí' : formatPrice(delivery)}</dd>
         </div>
         <div className={styles.total}>
-          <dt>Итого</dt>
+          <dt>Tổng cộng</dt>
           <dd>{formatPrice(total)}</dd>
         </div>
       </dl>

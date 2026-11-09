@@ -6,24 +6,24 @@ import { usePageTitle } from '../hooks/usePageTitle';
 import { useProducts } from '../hooks/useProducts';
 
 export default function Favorites() {
-  usePageTitle('Избранное');
+  usePageTitle('Yêu thích');
   const { ids } = useFavorites();
   const { products, loading, error, retry } = useProducts();
   const saved = products.filter((p) => ids.includes(p.id));
 
   return (
     <div className="container page">
-      <h1 className="page-title">Избранное</h1>
+      <h1 className="page-title">Yêu thích</h1>
       {ids.length === 0 ? (
-        <EmptyState icon="♡" title="Здесь пока пусто" text="Нажмите на сердечко у товара, чтобы сохранить его сюда.">
+        <EmptyState icon="♡" title="Ở đây vẫn còn trống" text="Bấm vào trái tim của sản phẩm để lưu nó ở đây.">
           <Link to="/catalog" className="btn btn-primary">
-            Перейти в каталог
+            Chuyển đến danh mục
           </Link>
         </EmptyState>
       ) : error ? (
-        <EmptyState icon="!" title="Не удалось загрузить избранное" text="Проверьте подключение к интернету и попробуйте ещё раз.">
+        <EmptyState icon="!" title="Không thể tải sản phẩm yêu thích" text="Kiểm tra kết nối internet và thử lại.">
           <button type="button" className="btn btn-primary" onClick={retry}>
-            Повторить
+            Thử lại
           </button>
         </EmptyState>
       ) : (

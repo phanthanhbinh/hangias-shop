@@ -11,9 +11,9 @@ import styles from './Checkout.module.css';
 import { usePageTitle } from '../hooks/usePageTitle';
 
 const PAYMENTS = [
-  { value: 'online', label: 'Картой онлайн' },
-  { value: 'courier-card', label: 'Картой курьеру' },
-  { value: 'cash', label: 'Наличными курьеру' },
+  { value: 'online', label: 'Bằng thẻ trực tuyến' },
+  // { value: 'courier-card', label: 'Bằng thẻ của người giao hàng' },
+  { value: 'cash', label: 'Tiền mặt khi nhận hàng' },
 ];
 const CARD_LIMIT = 200;
 const FIELD_ORDER = ['name', 'phone', 'address', 'date', 'time', 'card', 'payment'];
@@ -21,23 +21,23 @@ const FIELD_ORDER = ['name', 'phone', 'address', 'date', 'time', 'card', 'paymen
 const INITIAL = { name: '', phone: '', address: '', date: '', time: '', card: '', anonymous: false, payment: 'online' };
 
 export default function Checkout() {
-  usePageTitle('Оформление заказа');
+  usePageTitle('Đặt hàng');
   const cart = useCart();
   const navigate = useNavigate();
   const formRef = useRef(null);
   const [values, setValues] = useState(INITIAL);
   const [errors, setErrors] = useState({});
   const [order, setOrder] = useState(null);
-  // Защита от двойного клика: второй submit до перерисовки не создаст второй заказ
   const submittingRef = useRef(false);
 
   if (order) {
     return (
-      <Modal title={`Заказ №${order.number} оформлен`} onClose={() => navigate('/')}>
+      <Modal title={`Đơn hàng ${order.number} đã đặt thành công`} onClose={() => navigate('/')}>
         <p>
-          Спасибо, {order.name}! Мы позвоним по номеру {order.phone} для подтверждения.
+          Cảm ơn, {order.name}!
         </p>
-        <p className="field-hint">Демо-режим: данные никуда не отправляются</p>
+        <p>Chúng tôi sẽ gọi cho bạn tại số {order.phone} để xác nhận.
+        </p>
         <ul className={styles.orderList}>
           {order.lines.map((l) => (
             <li key={l.id}>
@@ -49,19 +49,19 @@ export default function Checkout() {
           ))}
         </ul>
         <dl className={styles.orderMeta}>
-          <dt>Доставка</dt>
+          <dt>Vận chuyển</dt>
           <dd>
             {new Date(`${order.date}T00:00`).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' })}, {order.time}
           </dd>
-          <dt>Адрес</dt>
+          <dt>Địa chỉ</dt>
           <dd>{order.address}</dd>
-          <dt>Итого</dt>
+          <dt>Thành tiền</dt>
           <dd>
             <strong>{formatPrice(order.total)}</strong>
           </dd>
         </dl>
         <Link to="/catalog" className="btn btn-primary">
-          Продолжить покупки
+          Tiếp tục mua sắm
         </Link>
       </Modal>
     );
@@ -72,7 +72,7 @@ export default function Checkout() {
       <div className="container page">
         <EmptyState title="Нечего оформлять" titleAs="h1" text="Сначала добавьте что-нибудь в корзину.">
           <Link to="/catalog" className="btn btn-primary">
-            Перейти в каталог
+            Đi tới Danh mục
           </Link>
         </EmptyState>
       </div>
@@ -141,10 +141,10 @@ export default function Checkout() {
       <div className={styles.layout}>
         <form ref={formRef} className={styles.form} onSubmit={submit} noValidate>
           <section className={styles.section}>
-            <h2 className={styles.sectionTitle}>Получатель</h2>
+            <h2 className={styles.sectionTitle}>Thông tin người nhận</h2>
             <div className={styles.row}>
               <div className="field">
-                <label htmlFor="checkout-name">Имя</label>
+                <label htmlFor="checkout-name">Tên</label>
                 <input
                   {...fieldProps('name')}
                   className="input"
@@ -154,14 +154,14 @@ export default function Checkout() {
                 {error('name')}
               </div>
               <div className="field">
-                <label htmlFor="checkout-phone">Телефон</label>
+                <label htmlFor="checkout-phone">Điện thoại</label>
                 <input
                   {...fieldProps('phone')}
                   className="input"
                   type="tel"
                   inputMode="tel"
                   autoComplete="tel"
-                  placeholder="+375 (29) 123-45-67"
+                  placeholder="0123-456-789"
                   onFocus={() => !values.phone && set('phone', PHONE_PREFIX)}
                   onChange={(e) => set('phone', formatPhone(e.target.value))}
                 />
@@ -170,26 +170,26 @@ export default function Checkout() {
             </div>
             <label className={styles.check}>
               <input type="checkbox" checked={values.anonymous} onChange={(e) => set('anonymous', e.target.checked)} />
-              Анонимная доставка — не называть получателю имя отправителя
+              Giao hàng ẩn danh — không cần gọi tên người gửi cho người nhận
             </label>
           </section>
 
           <section className={styles.section}>
-            <h2 className={styles.sectionTitle}>Доставка</h2>
+            <h2 className={styles.sectionTitle}>Giao hàng</h2>
             <div className="field">
-              <label htmlFor="checkout-address">Адрес в Минске</label>
+              <label htmlFor="checkout-address">Địa chỉ ở Vinh</label>
               <input
                 {...fieldProps('address')}
                 className="input"
                 autoComplete="street-address"
-                placeholder="ул. Сурганова, 27, кв. 14"
+                placeholder="Địa chỉ, ví dụ: 123 Quang Trung, Vinh"
                 onChange={(e) => set('address', e.target.value)}
               />
               {error('address')}
             </div>
             <div className={styles.row}>
               <div className="field">
-                <label htmlFor="checkout-date">Дата</label>
+                <label htmlFor="checkout-date">Ngày</label>
                 <input
                   {...fieldProps('date')}
                   className="input"
@@ -200,9 +200,9 @@ export default function Checkout() {
                 {error('date')}
               </div>
               <div className="field">
-                <label htmlFor="checkout-time">Интервал</label>
+                <label htmlFor="checkout-time">Thời gian</label>
                 <select {...fieldProps('time')} className="input" onChange={(e) => set('time', e.target.value)}>
-                  <option value="">Выберите время</option>
+                  <option value="">Chọn thời gian</option>
                   {slots.map((slot) => (
                     <option key={slot} value={slot}>
                       {slot}
@@ -213,15 +213,15 @@ export default function Checkout() {
               </div>
             </div>
             <p className="field-hint">
-              По Минску — 9 BYN, от 150 BYN бесплатно. За город — по договорённости, менеджер позвонит. Перед отправкой
-              пришлём фото букета.
+              Ở nội thành Vinh sẽ miễn phí. Ra khỏi thành phố - theo thỏa thuận, người quản lý sẽ gọi. Trước khi vận chuyển
+Chúng tôi sẽ gửi cho bạn một bức ảnh của bó hoa.
             </p>
           </section>
 
           <section className={styles.section}>
-            <h2 className={styles.sectionTitle}>Открытка</h2>
+            <h2 className={styles.sectionTitle}>Bưu thiếp</h2>
             <div className="field">
-              <label htmlFor="checkout-card">Текст открытки (открытка в подарок, необязательно)</label>
+              <label htmlFor="checkout-card">Nội dung bưu thiếp (thiệp làm quà tặng, tùy chọn)</label>
               <textarea
                 {...fieldProps('card')}
                 className={`input ${styles.textarea}`}
@@ -238,7 +238,7 @@ export default function Checkout() {
 
           <section className={styles.section}>
             <fieldset className="field">
-              <legend className={styles.sectionTitle}>Способ оплаты</legend>
+              <legend className={styles.sectionTitle}>Cách thanh toán</legend>
               <div className={styles.payments}>
                 {PAYMENTS.map((p) => (
                   <label key={p.value} className={styles.payment}>
@@ -260,11 +260,11 @@ export default function Checkout() {
           <button type="submit" className={`btn btn-primary ${styles.submit}`}>
             Подтвердить заказ на {formatPrice(cart.total)}
           </button>
-          <p className="field-hint">Это демо: заказ не отправляется, данные выводятся в консоль браузера.</p>
+          <p className="field-hint">Đây là demo: đơn hàng không được gửi, dữ liệu được hiển thị trong console của trình duyệt.</p>
         </form>
 
-        <aside className={styles.aside} aria-label="Ваш заказ">
-          <h2 className={styles.sectionTitle}>Ваш заказ</h2>
+        <aside className={styles.aside} aria-label="Đơn hàng của bạn">
+          <h2 className={styles.sectionTitle}>Đơn hàng của bạn</h2>
           <ul className={styles.items}>
             {cart.lines.map((l) => (
               <li key={l.id}>
@@ -279,7 +279,7 @@ export default function Checkout() {
           </ul>
           <OrderSummary>
             <Link to="/cart" className="btn btn-ghost">
-              ← Изменить корзину
+              ← Thay đổi giỏ hàng
             </Link>
           </OrderSummary>
         </aside>

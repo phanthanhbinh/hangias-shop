@@ -18,14 +18,14 @@ export default function CartItem({ line, onQtyChange, onRemove }) {
           <Link to={`/product/${product.slug}`}>{product.name}</Link>
         </h3>
         <p className={styles.meta}>
-          Размер {product.size} · {formatPrice(product.price)} / шт.
+          Kích cỡ {product.size} · {formatPrice(product.price)} / шт.
         </p>
         <div className={styles.controls}>
-          <QuantityControl value={qty} onChange={onQtyChange} label={`Количество «${product.name}»`} />
+          <QuantityControl value={qty} onChange={onQtyChange} label={`Số lượng «${product.name}»`} />
           <p className={styles.sum}>{formatPrice(product.price * qty)}</p>
         </div>
       </div>
-      <button type="button" className={styles.remove} onClick={onRemove} aria-label={`Удалить «${product.name}» из корзины`}>
+      <button type="button" className={styles.remove} onClick={onRemove} aria-label={`Xóa «${product.name}» khỏi giỏ hàng`}>
         <TrashIcon />
       </button>
     </li>

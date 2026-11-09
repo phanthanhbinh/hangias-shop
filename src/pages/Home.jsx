@@ -9,64 +9,64 @@ import styles from './Home.module.css';
 import { usePageTitle } from '../hooks/usePageTitle';
 
 const BENEFITS = [
-  {
-    icon: TruckIcon,
-    title: 'Доставка по Минску',
-    text: '9 BYN, от 150 BYN — бесплатно. Интервалы по 2 часа с 9:00 до 22:00. За город — по договорённости.',
-  },
-  {
-    icon: CameraIcon,
-    title: 'Фото букета перед отправкой',
-    text: 'Пришлём снимок в Viber или Telegram. Если что-то не нравится, поправим до выезда курьера.',
-  },
-  {
-    icon: LeafIcon,
-    title: 'Открытка в подарок',
-    text: 'Подпишем от руки вашим текстом. Можно отправить анонимно — получатель не узнает имя.',
-  },
+  { 
+icon: TruckIcon, 
+title: 'Delivery in Minsk', 
+text: '9 BYN, from 150 BYN - free. Intervals of 2 hours from 9:00 to 22:00. Out of town - by agreement.', 
+}, 
+{ 
+icon: CameraIcon, 
+title: 'Photo of the bouquet before sending', 
+text: `We'll send the photo to Viber or Telegram. If you don't like something, we'll fix it before the courier leaves.`, 
+}, 
+{ 
+icon: LeafIcon, 
+title: 'Gift card', 
+text: 'We will sign by hand with your text. You can send anonymously - the recipient will not recognize the name.', 
+},
 ];
 
 const OCCASIONS = [
-  { title: 'День рождения', hint: 'Шляпные коробки: ваза не нужна', to: '/catalog?category=boxes&stock=1' },
-  { title: 'Свидание', hint: 'Розы до 170 BYN', to: '/catalog?category=roses&max=170' },
-  { title: 'Маме', hint: 'Букеты в наличии', to: '/catalog?category=bouquets&stock=1' },
-  { title: 'Коллеге', hint: 'До 100 BYN, в наличии', to: '/catalog?max=100&stock=1' },
-  { title: 'Извиниться', hint: 'Пионовидные розы', to: '/catalog?q=пионовидная' },
+  { title: 'Birthday', hint: 'Hat boxes: vase not needed', to: '/catalog?category=boxes&stock=1' },
+  { title: 'Date night', hint: 'Roses up to 170 BYN', to: '/catalog?category=roses&max=170' },
+  { title: 'For Mom', hint: 'Bouquets in stock', to: '/catalog?category=bouquets&stock=1' },
+  { title: 'For a Colleague', hint: 'Up to 100 BYN, in stock', to: '/catalog?max=100&stock=1' },
+  { title: 'To Apologize', hint: 'Peony roses', to: '/catalog?q=peony' },
 ];
 
 const REVIEWS = [
-  {
-    name: 'Алина К.',
-    date: '28 октября 2026',
-    rating: 5,
-    text: 'Заказывала «Зефир» подруге на день рождения. За час до доставки прислали фото — я попросила убрать пампас, у неё аллергия. Убрали без вопросов.',
-  },
-  { name: 'Сергей', date: '21 октября 2026', rating: 5, text: 'Курьер приехал в свой интервал и позвонил за 15 минут. Всё.' },
-  {
-    name: 'Татьяна Михайловна',
-    date: '12 октября 2026',
-    rating: 5,
-    text: 'Внучка прислала мне хризантемы. Стоят вторую неделю, только воду меняю. Открытку подписали красивым почерком, оставила себе.',
-  },
-  {
-    name: 'Дмитрий',
-    date: '3 октября 2026',
-    rating: 4,
-    text: 'Розы свежие, собрано аккуратно. Курьер приехал в конце интервала, а я ждал ближе к началу. Если время важно, лучше написать об этом в комментарии.',
-  },
-  {
-    name: 'Ольга',
-    date: '19 сентября 2026',
-    rating: 5,
-    text: 'Отправляла фаленопсис коллеге в офис на Немиге. На улице был ветер с дождём, но упаковали так, что ни один цветок не помялся.',
-  },
-  { name: 'Влад', date: '7 сентября 2026', rating: 5, text: 'Нужно было срочно извиниться. Взял «Карамельный» — помогло.' },
-  {
-    name: 'Наталья',
-    date: '26 августа 2026',
-    rating: 5,
-    text: 'Мама живёт в Боровлянах, это уже за городом. Менеджер перезвонил, сразу назвал цену доставки, и букет привезли в тот же день.',
-  },
+  { 
+name: 'Alina K.', 
+date: 'October 28, 2026', 
+rating: 5, 
+text: 'I ordered “Zephyr” for a friend for her birthday. An hour before delivery they sent a photo - I asked to remove the pampas, she has allergies. Removed without question.', 
+}, 
+{ name: 'Sergey', date: 'October 21, 2026', rating: 5, text: 'The courier arrived at his interval and called 15 minutes before. All.' }, 
+{ 
+name: 'Tatyana Mikhailovna', 
+date: '12 October 2026', 
+rating: 5, 
+text: `My granddaughter sent me chrysanthemums. They've been standing for the second week, I just change the water. The card was signed in beautiful handwriting and I kept it for myself.`, 
+}, 
+{ 
+name: 'Dmitry', 
+date: 'October 3, 2026', 
+rating: 4, 
+text: 'The roses are fresh, carefully collected. The courier arrived at the end of the interval, and I waited closer to the beginning. If time is important, it is better to write about it in the comment.', 
+}, 
+{ 
+name: 'Olga', 
+date: 'September 19, 2026', 
+rating: 5, 
+text: 'I sent a phalaenopsis to a colleague in the office on Nemiga. There was wind and rain outside, but they packed it in such a way that not a single flower was wrinkled.', 
+}, 
+{ name: 'Vlad', date: 'September 7, 2026', rating: 5, text: 'There was an urgent need to apologize. I took Caramel and it helped.' }, 
+{ 
+name: 'Natalia', 
+date: 'August 26, 2026', 
+rating: 5, 
+text: 'Mom lives in Borovlyany, it’s already outside the city. The manager called back, immediately quoted the delivery price, and the bouquet was delivered on the same day.', 
+},
 ];
 
 export default function Home() {
@@ -79,40 +79,33 @@ export default function Home() {
 
   return (
     <>
-      <aside className={styles.season} aria-label="Сезонная акция">
-        <div className={`container ${styles.seasonInner}`}>
-          <span>Ноябрь — сезон хризантем и сухоцветов. До 30 ноября скидки на пять позиций каталога.</span>
-          <Link to="/catalog?sale=1">Смотреть</Link>
-        </div>
-      </aside>
-
       <section className={styles.hero}>
         <div className={`container ${styles.heroInner}`}>
           <div className={styles.heroText}>
-            <p className={styles.eyebrow}>Ежедневно 8:00–22:00 · Минск</p>
-            <h1>Соберём букет и привезём за два часа</h1>
+            <p className={styles.eyebrow}>Hằng ngày 8:00–22:00 </p>
+            <h1>Chúng tôi sẽ thu thập một bó hoa và giao nó sau hai giờ</h1>
             <p className={styles.lead}>
-              Перед отправкой пришлём фото, открытку положим бесплатно. На первый заказ — минус 10% по промокоду{' '}
-              <strong>FLEUR10</strong>.
+              Trước khi gửi, chúng tôi sẽ gửi ảnh, thiệp sẽ được tặng miễn phí. Với đơn hàng đầu tiên — giảm 10% bằng mã khuyến mãi{' '}
+              <strong>Hangias Florist</strong>.
             </p>
             <div className={styles.heroActions}>
               <Link to="/catalog" className="btn btn-primary">
-                Выбрать букет
+                Chọn bó hoa
               </Link>
               <Link to="/catalog?sale=1" className="btn btn-outline">
-                Товары со скидкой
+                Sản phẩm có khuyến mãi
               </Link>
             </div>
-            <p className={styles.today}>Сегодня доставили 37 заказов</p>
+            {/* <p className={styles.today}>37 đơn hàng được giao hôm nay</p> */}
           </div>
           <div className={styles.heroImage}>
-            <img src={HERO_IMAGE} alt="Витрина цветочного магазина с вёдрами свежих роз и пионов" />
+            <img src={HERO_IMAGE} alt="Vitrine của cửa hàng hoa với những chiếc bầu chứa hoa hồng và hoa lilies tươi" />
           </div>
         </div>
       </section>
 
       <section className={`container ${styles.section}`} aria-labelledby="categories-title">
-        <h2 id="categories-title">Категории</h2>
+        <h2 id="categories-title">Danh mục</h2>
         <ul className={styles.categories}>
           {CATEGORIES.map((c) => (
             <li key={c.id}>
@@ -126,7 +119,7 @@ export default function Home() {
       </section>
 
       <section className={`container ${styles.section}`} aria-labelledby="occasions-title">
-        <h2 id="occasions-title">Поводы</h2>
+        <h2 id="occasions-title">Lý do</h2>
         <ul className={styles.occasions}>
           {OCCASIONS.map((o) => (
             <li key={o.title}>
@@ -141,9 +134,9 @@ export default function Home() {
 
       <section className={`container ${styles.section}`} aria-labelledby="hits-title">
         <div className={styles.sectionHead}>
-          <h2 id="hits-title">Хиты продаж</h2>
+          <h2 id="hits-title">Bán chạy nhất</h2>
           <Link to="/catalog?sort=popular" className="btn btn-ghost">
-            Смотреть все →
+            Xem tất cả →
           </Link>
         </div>
         <ProductGrid products={hits} loading={loading} />
@@ -152,7 +145,7 @@ export default function Home() {
       <section className={styles.benefitsWrap} aria-labelledby="benefits-title">
         <div className="container">
           <h2 id="benefits-title" className="visually-hidden">
-            Условия доставки
+            Điều kiện giao hàng
           </h2>
           <ul className={styles.benefits}>
             {BENEFITS.map(({ icon: Icon, title, text }) => (
@@ -169,12 +162,12 @@ export default function Home() {
       </section>
 
       <section className={`container ${styles.section}`} aria-labelledby="reviews-title">
-        <h2 id="reviews-title">Отзывы покупателей</h2>
+        <h2 id="reviews-title">Đánh giá của khách hàng</h2>
         <ul className={styles.reviews}>
           {REVIEWS.map((r) => (
             <li key={r.name} className={styles.review}>
               <figure>
-                <div className={styles.stars} aria-label={`Оценка ${r.rating} из 5`}>
+                <div className={styles.stars} aria-label={`Đánh giá ${r.rating} trên 5`}>
                   {Array.from({ length: r.rating }, (_, i) => (
                     <StarIcon key={i} width={16} height={16} />
                   ))}
@@ -191,10 +184,10 @@ export default function Home() {
 
       <section className="container">
         <div className={styles.cta}>
-          <h2>Нужен букет на сегодня?</h2>
-          <p>30 букетов, коробок и растений. Не можете выбрать — позвоните: +375 (29) 318-46-72.</p>
+          <h2>Cần một bó hoa cho ngày hôm nay?</h2>
+          <p>30 bó hoa, hộp và cây. Nếu không chọn được hãy gọi: 0963-162-003.</p>
           <Link to="/catalog" className="btn btn-primary">
-            Перейти в каталог
+            Đi tới danh mục
           </Link>
         </div>
       </section>

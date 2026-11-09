@@ -8,7 +8,7 @@ export function fetchProducts({ isRetry = false } = {}) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (!isRetry && new URLSearchParams(window.location.search).has('error')) {
-        reject(new Error('Не удалось загрузить товары'));
+        reject(new Error('Không tải được sản phẩm'));
       } else {
         resolve(products);
       }

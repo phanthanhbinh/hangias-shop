@@ -10,7 +10,7 @@ import styles from './Cart.module.css';
 import { usePageTitle } from '../hooks/usePageTitle';
 
 export default function Cart() {
-  usePageTitle('Корзина');
+  usePageTitle('Giỏ hàng');
   const cart = useCart();
   const toast = useToast();
   const [code, setCode] = useState('');
@@ -19,9 +19,9 @@ export default function Cart() {
   if (cart.lines.length === 0) {
     return (
       <div className="container page">
-        <EmptyState title="Корзина пока пуста" titleAs="h1" text="Загляните в каталог — там много красивого.">
+        <EmptyState title="Giỏ hàng đang trống" titleAs="h1" text="Hãy ghé thăm danh mục — nơi có rất nhiều điều đẹp mắt.">
           <Link to="/catalog" className="btn btn-primary">
-            Перейти в каталог
+            Chuyển đến danh mục
           </Link>
         </EmptyState>
       </div>
@@ -30,19 +30,19 @@ export default function Cart() {
 
   const remove = (line) => {
     const undo = cart.remove(line.id);
-    toast.show(`«${line.product.name}» удалён из корзины`, { actionLabel: 'Отменить', onAction: undo });
+    toast.show(`«${line.product.name}» đã được xóa khỏi giỏ hàng`, { actionLabel: 'Hoàn tác', onAction: undo });
   };
 
   const applyPromo = (e) => {
     e.preventDefault();
     if (!code.trim()) {
-      setPromoError('Введите промокод');
+      setPromoError('Vui lòng nhập mã khuyến mãi');
     } else if (cart.applyPromo(code)) {
       setPromoError('');
       setCode('');
-      toast.show('Промокод применён: −10%');
+      toast.show('Promo code applied: −10%');
     } else {
-      setPromoError('Такого промокода нет. Проверьте написание');
+      setPromoError('Promo code not found. Please check the spelling');
     }
   };
 
@@ -51,7 +51,7 @@ export default function Cart() {
 
   return (
     <div className="container page">
-      <h1 className="page-title">Корзина</h1>
+      <h1 className="page-title">Giỏ hàng</h1>
       <div className={styles.layout}>
         <ul className={styles.list}>
           {cart.lines.map((line) => (
@@ -64,21 +64,21 @@ export default function Cart() {
           ))}
         </ul>
 
-        <aside className={styles.aside} aria-label="Сумма заказа">
+        <aside className={styles.aside} aria-label="Tổng số đơn hàng">
           <div className={styles.delivery}>
             <p>
               {left > 0 ? (
                 <>
-                  До бесплатной доставки осталось <strong>{formatPrice(left)}</strong>
+                  Đến miễn phí giao hàng còn <strong>{formatPrice(left)}</strong>
                 </>
               ) : (
-                <strong>Доставка бесплатная 🎉</strong>
+                <strong>Được giao hàng miễn phí 🎉</strong>
               )}
             </p>
             <div
               className={styles.progress}
               role="progressbar"
-              aria-label="Прогресс до бесплатной доставки"
+              aria-label="Tiến độ đến giao hàng miễn phí"
               aria-valuemin={0}
               aria-valuemax={100}
               aria-valuenow={Math.round(progress)}
@@ -90,21 +90,21 @@ export default function Cart() {
           {cart.promo ? (
             <div className={styles.promoApplied}>
               <span>
-                Промокод <strong>{cart.promo}</strong> применён
+                Mã khuyến mãi <strong>{cart.promo}</strong> đã được áp dụng
               </span>
               <button type="button" className="btn btn-ghost" onClick={cart.removePromo}>
-                Убрать
+                Xóa
               </button>
             </div>
           ) : (
             <form className={styles.promo} onSubmit={applyPromo} noValidate>
               <label htmlFor="promo" className="visually-hidden">
-                Промокод
+                Mã khuyến mãi
               </label>
               <input
                 id="promo"
                 className="input"
-                placeholder="Промокод"
+                placeholder="Mã khuyến mãi"
                 value={code}
                 onChange={(e) => {
                   setCode(e.target.value);
@@ -114,7 +114,7 @@ export default function Cart() {
                 aria-describedby={promoError ? 'promo-error' : undefined}
               />
               <button type="submit" className="btn btn-outline">
-                Применить
+                Áp dụng
               </button>
               {promoError && (
                 <p id="promo-error" className={`field-error ${styles.promoError}`} role="alert">
